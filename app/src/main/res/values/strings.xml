@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Hangman</string>
+
+<!--    information-->
+    <string name="programmedBy">Programmed by</string>
+    <string name="programmerName">Tobias Johnsson</string>
+    <string name="close">Close</string>
+
+<!--    game-->
+    <string name="usedLetters">Used letters</string>
+    <string name="triesLeft">Tries left:</string>
+    <string name="typeLetterHint">Type letter...</string>
+    <string name="makeGuess">GUESS</string>
+
+<!--    main-->
+    <string name="play">PLAY</string>
+    <string name="about">ABOUT</string>
+
+<!--    result-->
+    <string name="theWordHeader">The word is</string>
+    <string name="triesHeader">The word is</string>
+    <string name="backToMainMenu">BACK TO MAIN MENU</string>
+
+</resources>

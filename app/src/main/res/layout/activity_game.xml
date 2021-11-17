@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appBarLayout"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+      <!-- ToolBar widget -->
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="#B17F4A"
+          android:minHeight="?attr/actionBarSize"
+          android:theme="?attr/actionBarTheme"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:title=""
+          app:titleTextColor="#ffff" />
+
+      <ImageView
+          android:id="@+id/info"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="10dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="@+id/toolbar"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_baseline_info_24"/>
+
+      <ImageView
+          android:id="@+id/newWordRefresh"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="9dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/info"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_baseline_refresh_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+
+  <com.sdsmdg.harjot.vectormaster.VectorMasterView
+      android:id="@+id/hangman_Vector"
+      android:layout_width="270dp"
+      android:layout_height="270dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.214"
+      app:vector_src="@drawable/ic_vector_hangman" />
+
+  <TextView
+      android:id="@+id/txtViewWordToBeGuessed"
+      android:layout_width="wrap_content"
+      android:layout_height="45dp"
+      android:orientation="horizontal"
+      android:textSize="30sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/hangman_Vector"
+      app:layout_constraintVertical_bias="0.172"></TextView>
+
+  <LinearLayout
+      android:layout_width="320dp"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:id="@+id/usedLetterHeader"
+          android:textStyle="bold"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/usedLetters" />
+
+      <TextView
+          android:id="@+id/triesLeftHeader"
+          android:textStyle="bold"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toStartOf="@+id/txtViewTriesLeft"
+          android:text="@string/triesLeft" />
+
+      <TextView
+          android:paddingLeft="15dp"
+          android:id="@+id/txtViewTriesLeft"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:text=" 5555 " />
+    </RelativeLayout>
+
+
+    <TextView
+        android:textColor="@color/red"
+        android:id="@+id/txtViewLettersTried"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="35dp"
+        android:text="temp a,b,c" />
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/transparent">
+
+      <EditText
+          android:id="@+id/edtViewCharGuess"
+          android:textSize="14sp"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/search_bar"
+          android:clickable="true"
+          android:singleLine="true"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:hint="@string/typeLetterHint"
+          android:paddingLeft="10dp" />
+
+      <Button
+          android:id="@+id/guessBtn"
+          android:background="@color/transparent"
+          android:layout_width="90dp"
+          android:layout_alignRight="@+id/edtViewCharGuess"
+          android:enabled="false"
+          android:layout_height="match_parent"
+          android:text="@string/makeGuess"
+          tools:ignore="OnClick" />
+    </RelativeLayout>
+
+  </LinearLayout>
+
+
+  <!--    android:maxLength="1"-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
