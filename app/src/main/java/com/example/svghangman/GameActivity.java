@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Game extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     ImageView infoBtn;
 
@@ -113,9 +113,7 @@ public class Game extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 goToInformation();
-
             }
         });
         //Refresh game with new word in actionbar
@@ -123,9 +121,7 @@ public class Game extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 resetGameWithNewWord();
-
             }
         });
         //End Toolbar(Actionbar)
@@ -165,20 +161,13 @@ public class Game extends AppCompatActivity {
         guessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 guessWordClick();
-
             }
         });
 
-//        if (guessBtn.isEnabled()) {
-//            guessBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
-//        } else if (!guessBtn.isEnabled()) {
-//            guessBtn.setTextColor(ContextCompat.getColor(this, R.color.green));
-//        }
 
         //EditTextViews
-        edtViewCharGuess = (EditText) findViewById(R.id.edtViewCharGuess);
+        edtViewCharGuess = findViewById(R.id.edtViewCharGuess);
         edtViewCharGuess.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -186,26 +175,23 @@ public class Game extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 1) {
-
-                    Toast.makeText(Game.this, "You can only enter one letter at a time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, "You can only enter one letter at a time", Toast.LENGTH_SHORT).show();
                     guessBtn.setEnabled(false);
-
                 } else if (charSequence.length() == 0) {
-
+                    //If EditText is empty
                     guessBtn.setEnabled(false);
-
-
                 } else {
-
+                    //If its only one letter in the EditText
                     guessedChar = charSequence.toString();
                     guessBtn.setEnabled(true);
-
                 }
 
-                //Only show guessBtn if one char/letter is typed in EditText
+
                 if (guessBtn.isEnabled()) {
+                    //Show guessBtn
                     guessBtn.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 } else if (!guessBtn.isEnabled()) {
+                    //Hide guessBtn
                     guessBtn.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.transparent));
                 }
 
@@ -215,53 +201,41 @@ public class Game extends AppCompatActivity {
             public void afterTextChanged(Editable editable) { }
         });//End TextWatcher
 
-
-        myListOfWords = new ArrayList<String>();
-        myListOfWords = Helpers.getWords(Game.this, "database_file.txt");
+        //Create wordlist from database_file.txt
+        myListOfWords = new ArrayList<>();
+        myListOfWords = Helpers.getWords(GameActivity.this, "database_file.txt");
 
         initializeGame();
 
     }//End onCreate
 
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-
-    public void goToInformation (){
-        Intent goToInformationIntent = new Intent(this, Information.class); //Create intent
-        startActivity(goToInformationIntent); //Start next activity(LoginActivity)
-    }
-
-
     public void initializeGame() {
-        //Shuffle wordlist
+        //If wordlist is empty, get all words again
         if (myListOfWords.size() == 0 ) {
-            myListOfWords = Helpers.getWords(Game.this, "database_file.txt");
+            myListOfWords = Helpers.getWords(GameActivity.this, "database_file.txt");
         }
-
+        //Shuffle wordlist
         Collections.shuffle(myListOfWords);
         //Get first word in shuffled list
         wordToBeGuessed = myListOfWords.get(0);
-        //Remove word word from list
+        //Remove word word from list, if you choose to get a new word to not get it again
         myListOfWords.remove(0);
         //Make charArray from word
         wordDisplayedCharArray = wordToBeGuessed.toCharArray();
-        //Replace chars with underscores, what the user see
+        //Replace chars with underscores, letters and underscores presented to the user
         Arrays.fill(wordDisplayedCharArray, '_');
         //Initialize string from word-char-array (for search purposes)
         wordDisplayedString = String.valueOf(wordDisplayedCharArray);
-        //Clear guessed char-text
+        //Clear guessed char-text for safety's sake
         edtViewCharGuess.setText("");
         //Initialize string for letters tried
-        lettersTried = new ArrayList<>();;
-        //Set tries left in
+        lettersTried = new ArrayList<>();
+        //Set initial string message in lettersTriedView
         txtViewLettersTried.setText(MESSAGE_WITH_LETTERS_TRIED);
         //Set amount of tries
         tries = 10;
+        //Set initial value to triesLeft
         triesLeft = tries;
         //Show tries left
         txtViewTriesLeft.setText(triesLeft + "/" + tries);
@@ -272,12 +246,12 @@ public class Game extends AppCompatActivity {
 
 
     private void guessWordClick() {
-        if(String.valueOf(lettersTried).indexOf(guessedChar) < 0) {
+        if (String.valueOf(lettersTried).contains(guessedChar)) {
+            edtViewCharGuess.setText("");
+            Toast.makeText(GameActivity.this, "You have already used the letter " + guessedChar, Toast.LENGTH_SHORT).show();
+        } else {
             checkIfLetterIsInWord(guessedChar.charAt(0));
             edtViewCharGuess.setText("");
-        } else {
-            edtViewCharGuess.setText("");
-            Toast.makeText(Game.this, "You have already used the letter" + guessedChar, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -287,42 +261,42 @@ public class Game extends AppCompatActivity {
         if(wordToBeGuessed.indexOf(letter) >= 0) {
             //Display letters on screen
             if(wordDisplayedString.indexOf(letter) <= -1 ){
-
                 revealLetterInWord(letter);
-
                 displayWordOnScreen();
 
                 //Check if the game is won
                 if(!wordDisplayedString.contains("_")) {
                     txtViewTriesLeft.setText(WINNING_MESSAGE);
-
                     goToResult(WINNING_MESSAGE, wordToBeGuessed, triesLeft.toString());
-
                 }
             }
-            //Otherwise if the letter was not found inside the word to be guessed
-        } else {
 
+        //Otherwise if the letter was not found inside the word to be guessed
+            if(!lettersTried.contains(letter)) {
+                lettersTried.add(letter);
+                String lettersPresented = lettersTried.toString();
+                txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
+            }
+        } else {
             decreaseAndDisplayTriesLeft();
 
             //Check if the game is lost
             if(triesLeft <= 0) {
-
                 goToResult(LOSING_MESSAGE, wordToBeGuessed, triesLeft.toString());
-
+            }
+            if(!lettersTried.contains(letter)) {
+                lettersTried.add(letter);
+                String lettersPresented = lettersTried.toString();
+                txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
             }
         }
+
         //Display tried letters
-        if(lettersTried.indexOf(letter) < 0) {
-            lettersTried.add(letter);
-            String lettersPresented = lettersTried.toString();
-            txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
-        }
     }//End checkIfLetterIsInWord
 
 
     private void revealLetterInWord(char letter) {
-        //replace the underscores with letters
+        //Replace underscores with revealed letters
         int indexOfLetter = wordToBeGuessed.indexOf(letter);
         //While index is positive or 0
         while(indexOfLetter >= 0 ) {
@@ -336,41 +310,37 @@ public class Game extends AppCompatActivity {
 
 
     private void displayWordOnScreen() {
-        String formattedString ="";
+        StringBuilder formattedString = new StringBuilder();
+        //Create space between chars/letters when displayed on screen
         for (char character : wordDisplayedCharArray) {
-            formattedString += character + " ";
+            formattedString.append(character).append(" ");
         }
-
-        txtViewWordToBeGuessed.setText(formattedString);
-
+        txtViewWordToBeGuessed.setText(formattedString.toString());
     }
 
 
     private void decreaseAndDisplayTriesLeft() {
-        //If there are still some tries left
         if(triesLeft >= 0) {
-
             //Update hangman-svg
             drawHangman(triesLeft);
-
+            /* Decrease tries */
             triesLeft -= 1;
-            txtViewTriesLeft.setText(triesLeft + "/10");
-
+            //Show tries tries left on screen
+            txtViewTriesLeft.setText(triesLeft + "/" + tries);
         }
     }
 
 
     private void goToResult(String resultWinOrLose, String resultWord, String resultTries) {
-        HashMap<String, String> results = new HashMap<String, String>();
+        //Declare and put values into Hashmap to send multiple values in intent(putExtra)
+        HashMap<String, String> results = new HashMap<>();
         results.put("winOrLose", resultWinOrLose);
         results.put("word", resultWord);
         results.put("tries", resultTries);
-        Intent goToResultActivityIntent = new Intent(this, Result.class);
 
+        Intent goToResultActivityIntent = new Intent(this, ResultActivity.class);
         goToResultActivityIntent.putExtra("results", results);
-
         startActivity(goToResultActivityIntent);
-
     }
 
 
@@ -378,7 +348,20 @@ public class Game extends AppCompatActivity {
         initializeGame();
     }
 
+    //Actionbar-method
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    //Actionbar-method
+    public void goToInformation (){
+        Intent goToInformationIntent = new Intent(this, InformationActivity.class); //Create intent
+        startActivity(goToInformationIntent); //Start next activity(LoginActivity)
+    }
+
+    //Animations on hangman svg(image)-paths
     private void drawHangman(int tries) {
         switch (tries) {
             case 10:
@@ -427,11 +410,13 @@ public class Game extends AppCompatActivity {
 
 
     private void animations(VectorMasterView hangmanVector, PathModel area, String color) {
-        // initialise valueAnimator and pass start and end float values
+        //Initialise valueAnimator
         ValueAnimator valueAnimatorExpand = ValueAnimator.ofFloat(0.0f, 1.0f);
+
         valueAnimatorExpand.setDuration(1000);
 
         ValueAnimator valueAnimatorFade = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, Color.parseColor(color));
+
         if (area.getName().equals("s4_top_s_topbeam_corner") || area.getName().equals("s1_bot_s_leg3")) {
             valueAnimatorFade.setStartDelay(700);
             valueAnimatorFade.setDuration(500);
@@ -442,26 +427,20 @@ public class Game extends AppCompatActivity {
         valueAnimatorExpand.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                // set trim end value and update view
                 area.setTrimPathEnd((Float) valueAnimator.getAnimatedValue());
-
                 hangmanVector.update();
-
             }
         });
 
         valueAnimatorFade.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                System.out.println("animated value" + valueAnimator.getAnimatedValue());
                 area.setFillColor((Integer) valueAnimator.getAnimatedValue());
-
                 hangmanVector.update();
-
             }
         });
 
-        //Paths with expand-animation
+        //Prevent expand-animation on specific paths
         if (!area.getName().equals("s4_top_s_topbeam_corner")
                 && !area.getName().equals("s3_mid_s_hold")
                 && !area.getName().equals("s3_mid_l_hold")
@@ -476,7 +455,7 @@ public class Game extends AppCompatActivity {
             valueAnimatorExpand.start();
         }
 
-        //Paths with fade-animation
+        //All paths executes the fade-animation
         valueAnimatorFade.start();
 
     }

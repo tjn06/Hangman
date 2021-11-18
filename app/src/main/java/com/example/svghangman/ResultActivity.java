@@ -10,12 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Result extends AppCompatActivity implements View.OnClickListener{
+public class ResultActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView infoBtn;
     private ImageView playBtn;
@@ -81,11 +79,11 @@ public class Result extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void goToGame (){
-        Intent goToGameIntent = new Intent(this, Game.class); //Create intent
+        Intent goToGameIntent = new Intent(this, GameActivity.class); //Create intent
         startActivity(goToGameIntent); //Start next activity(LoginActivity)
     }
     public void goToInformation (){
-        Intent goToInformationIntent = new Intent(this, Information.class); //Create intent
+        Intent goToInformationIntent = new Intent(this, InformationActivity.class); //Create intent
         startActivity(goToInformationIntent); //Start next activity(LoginActivity)
     }
 

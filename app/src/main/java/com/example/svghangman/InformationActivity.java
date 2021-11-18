@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class Information extends AppCompatActivity {
+public class InformationActivity extends AppCompatActivity {
 
     Button backBtn;
 

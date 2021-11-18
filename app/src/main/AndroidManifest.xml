@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SvgHangman">
         <activity
-            android:name=".Information"
+            android:name=".InformationActivity"
             android:exported="false" />
         <activity
-            android:name=".Game"
+            android:name=".GameActivity"
             android:exported="false" />
         <activity
-            android:name=".Result"
+            android:name=".ResultActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

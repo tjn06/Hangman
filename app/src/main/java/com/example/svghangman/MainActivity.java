@@ -6,8 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void goToGame (){
-        Intent goToGameIntent = new Intent(this, Game.class); //Create intent
+        Intent goToGameIntent = new Intent(this, GameActivity.class); //Create intent
         startActivity(goToGameIntent); //Start next activity(LoginActivity)
     }
     public void goToInformation (){
-        Intent goToInformationIntent = new Intent(this, Information.class); //Create intent
+        Intent goToInformationIntent = new Intent(this, InformationActivity.class); //Create intent
         startActivity(goToInformationIntent); //Start next activity(LoginActivity)
     }
 
