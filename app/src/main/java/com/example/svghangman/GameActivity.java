@@ -175,15 +175,26 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 1) {
+
                     Toast.makeText(GameActivity.this, "You can only guess one letter at a time", Toast.LENGTH_SHORT).show();
                     guessBtn.setEnabled(false);
+
                 } else if (charSequence.length() == 0) {
+
                     //If EditText is empty
                     guessBtn.setEnabled(false);
+
                 } else {
-                    //Set guessedChar if its one letter/char in the EditText not otherwise
-                    guessedChar = charSequence.toString();
-                    guessBtn.setEnabled(true);
+
+                    if(!Character.isLetter(charSequence.charAt(0))) {
+                        Toast.makeText(GameActivity.this, "You can only guess letters from the alphabet", Toast.LENGTH_SHORT).show();
+                        guessBtn.setEnabled(false);
+                    } else {
+                        //Set guessedChar if its one letter/char in the EditText not otherwise
+                        guessedChar = charSequence.toString();
+                        guessBtn.setEnabled(true);
+                    }
+
                 }
 
 
