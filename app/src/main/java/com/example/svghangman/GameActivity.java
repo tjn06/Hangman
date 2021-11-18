@@ -175,7 +175,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 1) {
-                    Toast.makeText(GameActivity.this, "You can only enter one letter at a time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, "You can only guess one letter at a time", Toast.LENGTH_SHORT).show();
                     guessBtn.setEnabled(false);
                 } else if (charSequence.length() == 0) {
                     //If EditText is empty
@@ -316,10 +316,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void decreaseAndDisplayTriesLeft() {
         if(triesLeft >= 0) {
-            //Update hangman-svg
-            drawHangman(triesLeft);
             /* Decrease tries */
             triesLeft -= 1;
+            //Update hangman-svg
+            drawHangman(triesLeft);
             //Show tries tries left on screen
             txtViewTriesLeft.setText(triesLeft + "/" + tries);
         }
@@ -359,7 +359,7 @@ public class GameActivity extends AppCompatActivity {
     //Animations on hangman svg(image)-paths
     private void drawHangman(int tries) {
         switch (tries) {
-            case 10:
+            case 9:
                 animations(hangmanVector, step1LegL1, LSHADOW);
                 animations(hangmanVector, step1LegS1, MSHADOW);
                 animations(hangmanVector, step1LegL2, LSHADOW);
@@ -369,35 +369,35 @@ public class GameActivity extends AppCompatActivity {
                 animations(hangmanVector, step1LegL4, MSHADOW);
                 animations(hangmanVector, step1LegS4, DSHADOW);
                 break;
-            case 9:
+            case 8:
                 animations(hangmanVector, step2BeamL, LIGHT);
                 animations(hangmanVector, step2BeamS, LSHADOW);
                 break;
-            case 8:
+            case 7:
                 animations(hangmanVector, step3HoldL, LIGHT);
                 animations(hangmanVector, step3HoldS, MSHADOW);
                 break;
-            case 7:
+            case 6:
                 animations(hangmanVector, step4TopBeamL, LIGHT);
                 animations(hangmanVector, step4TopBeamS, DSHADOW);
                 animations(hangmanVector, step4TopBeamC, MSHADOW);
                 break;
-            case 6:
+            case 5:
                 animations(hangmanVector, step5HeadRope, ROPEANDHUMAN);
                 break;
-            case 5:
+            case 4:
                 animations(hangmanVector, step6Body, ROPEANDHUMAN);
                 break;
-            case 4:
+            case 3:
                 animations(hangmanVector, step7RightArm, ROPEANDHUMAN);
                 break;
-            case 3:
+            case 2:
                 animations(hangmanVector, step8LeftArm, ROPEANDHUMAN);
                 break;
-            case 2:
+            case 1:
                 animations(hangmanVector, step9RightLeg, ROPEANDHUMAN);
                 break;
-            case 1:
+            case 0:
                 animations(hangmanVector, step10LeftLeg, ROPEANDHUMAN);
                 break;
         }
