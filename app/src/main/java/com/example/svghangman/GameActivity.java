@@ -219,7 +219,7 @@ public class GameActivity extends AppCompatActivity {
         Collections.shuffle(myListOfWords);
         //Get first word in shuffled list
         wordToBeGuessed = myListOfWords.get(0);
-        //Remove word word from list, if you choose to get a new word to not get it again
+        //Remove word from list, if you choose to get a new word to not get it again
         myListOfWords.remove(0);
         //Make charArray from word
         wordDisplayedCharArray = wordToBeGuessed.toCharArray();
