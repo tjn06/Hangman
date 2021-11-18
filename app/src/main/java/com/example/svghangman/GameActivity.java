@@ -39,14 +39,14 @@ public class GameActivity extends AppCompatActivity {
     private static final String DSHADOW = "#683c11";
     private static final String ROPEANDHUMAN = "#432918";
 
-    TextView txtViewWordToBeGuessed; //Showing display
+    TextView txtViewWordToBeGuessed;
     private String wordDisplayedString;
     private char[] wordDisplayedCharArray;
 
     TextView txtViewLettersTried;
     private List<Character> lettersTried;
 
-    private String wordToBeGuessed; //String stored
+    private String wordToBeGuessed;
     private String guessedChar;
 
     EditText edtViewCharGuess;
@@ -181,7 +181,7 @@ public class GameActivity extends AppCompatActivity {
                     //If EditText is empty
                     guessBtn.setEnabled(false);
                 } else {
-                    //If its only one letter in the EditText
+                    //Set guessedChar if its one letter/char in the EditText not otherwise
                     guessedChar = charSequence.toString();
                     guessBtn.setEnabled(true);
                 }
@@ -267,8 +267,16 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void checkIfLetterIsInWord(char letter) {
+        //If letter is not used before show letter on screen
+        if(!lettersTried.contains(letter)) {
+            lettersTried.add(letter);
+            String lettersPresented = lettersTried.toString();
+            txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
+        }
+
         //If the letter was found inside the word to be guessed
         if(wordToBeGuessed.indexOf(letter) >= 0) {
+
             //Display letters on screen
             if(wordDisplayedString.indexOf(letter) <= -1 ){
                 revealLetterInWord(letter);
@@ -276,32 +284,19 @@ public class GameActivity extends AppCompatActivity {
 
                 //Check if the game is won
                 if(!wordDisplayedString.contains("_")) {
-                    txtViewTriesLeft.setText(WINNING_MESSAGE);
                     goToResult(WINNING_MESSAGE, wordToBeGuessed, triesLeft.toString());
                 }
             }
-
-        //Otherwise if the letter was not found inside the word to be guessed
-            if(!lettersTried.contains(letter)) {
-                lettersTried.add(letter);
-                String lettersPresented = lettersTried.toString();
-                txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
-            }
+        //Else if the letter was not found inside the word to be guessed
         } else {
-            decreaseAndDisplayTriesLeft();
 
+            decreaseAndDisplayTriesLeft();
             //Check if the game is lost
             if(triesLeft <= 0) {
                 goToResult(LOSING_MESSAGE, wordToBeGuessed, triesLeft.toString());
             }
-            if(!lettersTried.contains(letter)) {
-                lettersTried.add(letter);
-                String lettersPresented = lettersTried.toString();
-                txtViewLettersTried.setText((lettersPresented.substring(1, lettersPresented.length() - 1)));
-            }
-        }
 
-        //Display tried letters
+        }
     }//End checkIfLetterIsInWord
 
 
@@ -311,7 +306,7 @@ public class GameActivity extends AppCompatActivity {
         //While index is positive or 0
         while(indexOfLetter >= 0 ) {
             wordDisplayedCharArray[indexOfLetter] = wordToBeGuessed.charAt(indexOfLetter);
-            //Find possible more equal letters,while until indexOfLetter is -1
+            //Find possible more equal letters until indexOfLetter is -1
             indexOfLetter = wordToBeGuessed.indexOf(letter, indexOfLetter + 1);
         }
         //Update the string as well
