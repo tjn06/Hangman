@@ -161,7 +161,7 @@ public class GameActivity extends AppCompatActivity {
         guessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guessWordClick();
+                guessLetterBtnClick();
             }
         });
 
@@ -255,7 +255,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-    private void guessWordClick() {
+    private void guessLetterBtnClick() {
         if (String.valueOf(lettersTried).contains(guessedChar)) {
             edtViewCharGuess.setText("");
             Toast.makeText(GameActivity.this, "You have already used the letter " + guessedChar, Toast.LENGTH_SHORT).show();
