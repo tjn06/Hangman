@@ -245,6 +245,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    private void displayWordOnScreen() {
+        StringBuilder formattedString = new StringBuilder();
+        //Create space between chars/letters when displayed on screen
+        for (char character : wordDisplayedCharArray) {
+            formattedString.append(character).append(" ");
+        }
+        txtViewWordToBeGuessed.setText(formattedString.toString());
+    }
+
+
     private void guessWordClick() {
         if (String.valueOf(lettersTried).contains(guessedChar)) {
             edtViewCharGuess.setText("");
@@ -306,16 +316,6 @@ public class GameActivity extends AppCompatActivity {
         }
         //Update the string as well
         wordDisplayedString = String.valueOf(wordDisplayedCharArray);
-    }
-
-
-    private void displayWordOnScreen() {
-        StringBuilder formattedString = new StringBuilder();
-        //Create space between chars/letters when displayed on screen
-        for (char character : wordDisplayedCharArray) {
-            formattedString.append(character).append(" ");
-        }
-        txtViewWordToBeGuessed.setText(formattedString.toString());
     }
 
 
