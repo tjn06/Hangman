@@ -1,4 +1,15 @@
-# Hangman
+# Hangman (Android App)
 
-- Har implementerat alla vg-kraven
-- OBS, ta gärna ner tangentbordsmenyn(hela hangmanbilden syns inte när man har den uppe) innan du trycker gissa för att se animationerna på Hangmanbilden om du gissar fel :)
+A simple mobile version of the classic Hangman game, built in Java using Android Studio.
+
+## Features
+- Built for Android devices
+- Classic word-guessing gameplay
+- Developed in Java
+
+## Requirements
+- Android Studio
+- Java SDK
+
+## Status
+Educational project / Demo app
